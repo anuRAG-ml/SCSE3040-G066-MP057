@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# IDE
+.vscode/
+
+# MLflow artifacts
+mlruns/
+mlartifacts/
+
+# DVC cache
+.dvc/cache/
+
+# Testing
+.pytest_cache/
