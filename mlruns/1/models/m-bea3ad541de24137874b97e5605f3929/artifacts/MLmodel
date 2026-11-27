@@ -1,0 +1,25 @@
+artifact_path: file:///C:/Users/hp/SCSE3040-G066-MP057/mlruns/1/models/m-bea3ad541de24137874b97e5605f3929/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.12.5
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types:
+    - numpy.dtype
+    - sklearn.tree._tree.Tree
+mlflow_version: 3.18.0
+model_id: m-bea3ad541de24137874b97e5605f3929
+model_size_bytes: 6733730
+model_uuid: m-bea3ad541de24137874b97e5605f3929
+prompts: null
+run_id: 63f86626fec74d0e92f3a20886475795
+utc_time_created: '2026-11-27 11:31:47.740504'

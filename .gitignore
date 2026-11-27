@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.pyc
 venv/
@@ -8,8 +8,6 @@ venv/
 .vscode/
 
 # MLflow artifacts
-mlruns/
-mlartifacts/
 
 # DVC cache
 .dvc/cache/
