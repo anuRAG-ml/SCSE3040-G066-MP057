@@ -115,3 +115,20 @@ R50002,0.0
 ---
 
 **Project Goal:** To build a complete, reproducible MLOps pipeline that transforms raw power-loom production data into a deployable, monitored and continuously improvable Machine Learning solution.
+
+## Local Kubernetes Deployment
+
+The GitHub Actions workflow runs Python compilation and tests, then builds the Docker image without publishing it.
+
+For a local Kubernetes cluster that can access images built by Docker:
+
+```powershell
+docker build -t mp057-power-loom:latest .
+kubectl apply -f k8s/
+kubectl rollout status deployment/mp057-api
+kubectl port-forward service/mp057-api 8000:80
+```
+
+In another terminal, check `http://localhost:8000/health` and submit a request to `/predict`. The API returns an `X-Request-ID` header and writes structured JSON request and prediction events to its logs; view them with `kubectl logs deployment/mp057-api`.
+
+For a remote cluster, publish the image to a registry accessible by the cluster and update the `image` in `k8s/deployment.yaml` to that registry reference before applying the manifests.
