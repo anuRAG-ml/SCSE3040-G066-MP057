@@ -16,5 +16,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Compile Python source
-        run: python -m compileall -q src
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Compile Python source and tests
+        run: python -m compileall -q src app tests
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Build Docker image
+        run: docker build -t mp057-power-loom:ci .

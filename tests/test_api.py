@@ -1,4 +1,7 @@
-﻿import pytest
+﻿import json
+import logging
+
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -27,6 +30,24 @@ def test_valid_prediction():
     response = client.post("/predict", json=VALID_PAYLOAD)
     assert response.status_code == 200
     assert "prediction" in response.json()
+    assert response.headers["X-Request-ID"]
+
+
+def test_prediction_logs_json_with_request_id(caplog):
+    with caplog.at_level(logging.INFO, logger="mp057-api"):
+        response = client.post("/predict", json=VALID_PAYLOAD)
+
+    events = [
+        json.loads(record.getMessage())
+        for record in caplog.records
+        if record.name == "mp057-api"
+    ]
+    prediction_event = next(event for event in events if event["event"] == "prediction")
+    request_event = next(event for event in events if event["event"] == "http_request")
+
+    assert prediction_event["request_id"] == response.headers["X-Request-ID"]
+    assert request_event["request_id"] == response.headers["X-Request-ID"]
+    assert isinstance(prediction_event["predicted_metres_per_shift"], float)
 
 
 def test_invalid_loom_age():
